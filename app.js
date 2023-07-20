@@ -29,8 +29,9 @@ class App{
 		this.scene = new THREE.Scene();
         this.scene.add( this.dolly );
         
-		const ambient = new THREE.HemisphereLight(0xFFFFFF, 0xAAAAAA, 0.8);
-		this.scene.add(ambient);
+		const ambientLight = new THREE.AmbientLight(0x404040); // Adjust the color as needed
+		this.scene.add(ambientLight);
+
 
 		this.renderer = new THREE.WebGLRenderer({ antialias: true });
 		this.renderer.setPixelRatio( window.devicePixelRatio );
@@ -79,6 +80,13 @@ class App{
           pmremGenerator.dispose();
 
           self.scene.environment = envMap;
+
+	const loader = new THREE.TextureLoader();
+	const skyTexture = loader.load('./assets/textures/sky.jpg');
+	const skyMaterial = new THREE.MeshBasicMaterial({ map: skyTexture });
+	const skyBox = new THREE.Mesh(new THREE.BoxGeometry(1000, 1000, 1000), skyMaterial);
+	this.scene.add(skyBox);
+
 
         }, undefined, (err)=>{
             console.error( 'An error occurred setting the environment');
