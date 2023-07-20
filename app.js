@@ -365,6 +365,12 @@ class App{
         
         this.stats.update();
 		this.renderer.render(this.scene, this.camera);
+
+		
+	const timeOfDay = (timestamp / 1000) % 60; // Adjust the cycle duration
+	const lightIntensity = Math.sin((2 * Math.PI * timeOfDay) / 60); // Adjust intensity based on time of day
+	directionalLight.intensity = lightIntensity;
+
 	}
 }
 
